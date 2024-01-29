@@ -17,7 +17,7 @@ export default function Home() {
       // Vérification des identifiants en dur (à remplacer par votre logique de connexion réelle)
       if (email === 'test@example.com' && password === 'mdp') {
         // Redirection vers une autre page après une connexion réussie
-        router.push('/profil');
+        router.push('/');
       } else {
         setError('Adresse e-mail ou mot de passe incorrect');
       }
