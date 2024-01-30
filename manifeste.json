@@ -1,8 +1,9 @@
 {
   "name": "Campus Quest",
   "short_name": "Campus Quest",
-  "description": "Description de votre application",
+  "description":  "Exercice de PWA avec Vincent - POC n°1",
   "start_url": "/",
+  "orientation": "portrait",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
