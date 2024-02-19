@@ -1,8 +1,7 @@
-// pages/index.js
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
-
+import { sql } from "@vercel/postgres";
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -14,15 +13,26 @@ export default function Home() {
     e.preventDefault();
 
     try {
-      // Vérification des identifiants en dur (à remplacer par votre logique de connexion réelle)
-      if (email === 'test@example.com' && password === 'mdp') {
-        // Redirection vers une autre page après une connexion réussie
-        router.push('/');
-      } else {
-        setError('Adresse e-mail ou mot de passe incorrect');
+      // Vérification si l'email existe dans la base de données
+      const { rows } = await sql`SELECT * from users where email = ${email}`;
+      if (rows.length === 0) {
+        setError('Adresse e-mail incorrecte');
+        return;
       }
+
+      // Vérification si le mot de passe correspond
+      const user = rows[0]; 
+      if (user.password !== password) {
+        setError('Mot de passe incorrect');
+        return;
+      }
+
+      // Redirection vers une autre page après une connexion réussie
+      router.push('/');
+      
     } catch (error) {
-      setError(error.message);
+      console.error(error);
+      setError('Une erreur est survenue lors de la connexion');
     }
   };
 
